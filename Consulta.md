@@ -104,11 +104,10 @@ typedef struct free_area_struct {
             {
 	            return page_pfn ^ (1 << order);
             }
-        ```
-    - ```
-        mask = (~0 << k) 
-        imask = 1 + ~mask
-        imask = -mask = 1 + ~mask
-        ```
+    	- ```
+        	mask = (~0 << k) 
+        	imask = 1 + ~mask
+        	imask = -mask = 1 + ~mask
+       		```
 - Once the buddy is merged, it is removed for the free list and the newly coalesced pair moves to the next higher order to see if it may also be merged
 
