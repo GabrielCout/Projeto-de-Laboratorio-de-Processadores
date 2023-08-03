@@ -13,7 +13,7 @@ void initialize(uint32_t heap_init, uint32_t stack_init) {
         free_area[j].map = NULL;
     }
 
-    for (i = 0, current = &free_area[MAX_ORDER]; i < size_in_bytes; i += MAX_BLOCK_SIZE, current += 2*sizeof(struct list_addr *) + sizeof(uint32_t)) {
+    for (i = 0, current = &free_area[MAX_ORDER].free_list; i < size_in_bytes; i += MAX_BLOCK_SIZE, current += 2*sizeof(struct list_addr *) + sizeof(uint32_t)) {
         if (i == 0) {
             current->prev = NULL;
         }
