@@ -1,7 +1,6 @@
 #include "malloc.h"
 
 free_area_t free_area[MAX_ORDER];
-uint32_t MAX_BLOCK_SIZE = PAGE_SIZE + (1 << (MAX_ORDER));
 
 void initialize(uint32_t heap_init, uint32_t stack_init) {
     uint32_t size_in_bytes = stack_init - heap_init;

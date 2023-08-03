@@ -17,6 +17,8 @@
 #define MAX_ORDER 10
 #endif
 
+#define MAX_BLOCK_SIZE PAGE_SIZE * (1 << (MAX_ORDER))
+
 struct list_addr {
 	struct list_addr *next, *prev;
     uint32_t addr;

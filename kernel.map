@@ -13,57 +13,56 @@ Linker script and memory map
  .reset         0x00000000       0xa0 boot.o
                 0x00008000                        . = 0x8000
 
-.text           0x00008000      0x18c
+.text           0x00008000      0x180
  *(.text)
  .text          0x00008000        0x0 boot.o
- .text          0x00008000      0x15c malloc.o
+ .text          0x00008000      0x150 malloc.o
                 0x00008000                initialize
-                0x00008130                malloc
- .text          0x0000815c       0x30 main.o
-                0x0000815c                main
+                0x00008124                malloc
+ .text          0x00008150       0x30 main.o
+                0x00008150                main
 
-.glue_7         0x0000818c        0x0
- .glue_7        0x0000818c        0x0 linker stubs
+.glue_7         0x00008180        0x0
+ .glue_7        0x00008180        0x0 linker stubs
 
-.glue_7t        0x0000818c        0x0
- .glue_7t       0x0000818c        0x0 linker stubs
+.glue_7t        0x00008180        0x0
+ .glue_7t       0x00008180        0x0 linker stubs
 
-.vfp11_veneer   0x0000818c        0x0
- .vfp11_veneer  0x0000818c        0x0 linker stubs
+.vfp11_veneer   0x00008180        0x0
+ .vfp11_veneer  0x00008180        0x0 linker stubs
 
-.v4_bx          0x0000818c        0x0
- .v4_bx         0x0000818c        0x0 linker stubs
+.v4_bx          0x00008180        0x0
+ .v4_bx         0x00008180        0x0 linker stubs
 
-.iplt           0x0000818c        0x0
- .iplt          0x0000818c        0x0 boot.o
+.iplt           0x00008180        0x0
+ .iplt          0x00008180        0x0 boot.o
 
-.rel.dyn        0x0000818c        0x0
- .rel.iplt      0x0000818c        0x0 boot.o
+.rel.dyn        0x00008180        0x0
+ .rel.iplt      0x00008180        0x0 boot.o
 
-.data           0x0000818c        0x4
+.data           0x00008180        0x0
  *(.data)
- .data          0x0000818c        0x0 boot.o
- .data          0x0000818c        0x4 malloc.o
-                0x0000818c                MAX_BLOCK_SIZE
- .data          0x00008190        0x0 main.o
-                0x00008190                        start_bss = .
+ .data          0x00008180        0x0 boot.o
+ .data          0x00008180        0x0 malloc.o
+ .data          0x00008180        0x0 main.o
+                0x00008180                        start_bss = .
 
-.igot.plt       0x00008190        0x0
- .igot.plt      0x00008190        0x0 boot.o
+.igot.plt       0x00008180        0x0
+ .igot.plt      0x00008180        0x0 boot.o
 
-.bss            0x00008190       0xa0
+.bss            0x00008180       0xa0
  *(.bss)
- .bss           0x00008190        0x0 boot.o
- .bss           0x00008190       0xa0 malloc.o
-                0x00008190                free_area
- .bss           0x00008230        0x0 main.o
-                0x0000a230                        . = (. + 0x2000)
-                0x0000a230                        . = ALIGN (0x4)
-                0x0000a230                        end_bss = .
-                0x0000a230                        start_heap = .
-                0x0020a230                        . = (. + 0x200000)
-                0x0020a230                        . = ALIGN (0x8)
-                0x0020a230                        stack_svr = .
+ .bss           0x00008180        0x0 boot.o
+ .bss           0x00008180       0xa0 malloc.o
+                0x00008180                free_area
+ .bss           0x00008220        0x0 main.o
+                0x0000a220                        . = (. + 0x2000)
+                0x0000a220                        . = ALIGN (0x4)
+                0x0000a220                        end_bss = .
+                0x0000a220                        start_heap = .
+                0x0020a220                        . = (. + 0x200000)
+                0x0020a220                        . = ALIGN (0x8)
+                0x0020a220                        stack_svr = .
 LOAD boot.o
 LOAD malloc.o
 LOAD main.o
@@ -89,15 +88,15 @@ LOAD linker stubs
  .debug_line    0x0000005f      0x229 malloc.o
  .debug_line    0x00000288      0x1ad main.o
 
-.debug_info     0x00000000      0x300
+.debug_info     0x00000000      0x2f0
  .debug_info    0x00000000       0x26 boot.o
- .debug_info    0x00000026      0x1f7 malloc.o
- .debug_info    0x0000021d       0xe3 main.o
+ .debug_info    0x00000026      0x1e7 malloc.o
+ .debug_info    0x0000020d       0xe3 main.o
 
-.debug_abbrev   0x00000000      0x1c0
+.debug_abbrev   0x00000000      0x1bf
  .debug_abbrev  0x00000000       0x14 boot.o
- .debug_abbrev  0x00000014      0x111 malloc.o
- .debug_abbrev  0x00000125       0x9b main.o
+ .debug_abbrev  0x00000014      0x110 malloc.o
+ .debug_abbrev  0x00000124       0x9b main.o
 
 .debug_aranges  0x00000000       0x60
  .debug_aranges
@@ -107,11 +106,11 @@ LOAD linker stubs
  .debug_aranges
                 0x00000040       0x20 main.o
 
-.debug_str      0x00000000      0x1cd
+.debug_str      0x00000000      0x1be
  .debug_str     0x00000000       0x4c boot.o
- .debug_str     0x0000004c      0x16f malloc.o
-                                0x1f0 (size before relaxing)
- .debug_str     0x000001bb       0x12 main.o
+ .debug_str     0x0000004c      0x160 malloc.o
+                                0x1e1 (size before relaxing)
+ .debug_str     0x000001ac       0x12 main.o
                                 0x14a (size before relaxing)
 
 .debug_frame    0x00000000       0x84
