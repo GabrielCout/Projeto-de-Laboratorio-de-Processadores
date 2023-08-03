@@ -12,7 +12,20 @@ b _irq
 b _fiq
 
 _reset:
-    b main
+   // Configura sp do modo SVR:
+   mov r0, #0b10011
+   msr cpsr, r0
+   ldr sp, =stack_svr
+
+   // Zera segmento .bss:
+   mov r0, #0
+   ldr r1, =start_bss
+   ldr r2, =end_bss
+loop_zera:
+   cmp r1, r2
+   bge start
+   str r0, [r1], #4
+   b loop_zera
 
 _undefined:
     mov r0, #0x11
@@ -44,4 +57,9 @@ _irq:
 _fiq:
     mov r0, #0x66
     b _fiq
+
+start:
+    ldr r0, =start_heap
+    ldr r1, =stack_svr
+    bl initialize
 

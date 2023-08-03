@@ -49,7 +49,7 @@ typedef struct free_area_struct {
     - **index** is the index of the page within the global **mem_map** array
     - By shifting it right by 1+order bits, the bit within **map** representing the pair of buddies is revealed. The aditional shift is because it is addressing pairs of consecutive blocks (and the number of pages on a block is always power of 2, so the order 0 pairs are always X0 and X1), not blocks
 
-    - __change_bit can be [this](https://elixir.bootlin.com/linux/v4.19.154/source/include/asm-generic/bitops/non-atomic.h#L41) or [https://github.com/torvalds/linux/blob/master/arch/alpha/include/asm/bitops.h#L122]
+    - __change_bit can be [this](https://elixir.bootlin.com/linux/v4.19.154/source/include/asm-generic/bitops/non-atomic.h#L41) or [that](https://github.com/torvalds/linux/blob/master/arch/alpha/include/asm/bitops.h#L122)
 
 # 6.2 - Allocating Pages
 

@@ -1,4 +1,4 @@
-FONTES = kernel.s malloc.c main.c startup.s
+FONTES = boot.s malloc.c main.c
 
 EXEC = kernel.elf
 MAP = kernel.map

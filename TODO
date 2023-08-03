@@ -1,0 +1,31 @@
+- Definir endereçamento de memória
+
+- Criar estrutura de dados para manipulação da memória
+    - Página
+    - Bloco
+    - Lista encadeada de blocos
+    - Vetor (ordem do bloco)
+    - Funções de dividir e juntar blocos
+    - free_area_t struct
+
+- Criar funções da API
+    - `struct page * alloc_page(unsigned int gfp_mask)`
+        - Allocate a single page and return a struct address
+    
+    - `struct page * alloc_pages(unsigned int gfp_mask, unsigned int order)`
+        - Allocate 2<sup>*order*</sup> number of pages and returns a struct page
+    
+    - `unsigned long get_free_page(unsigned int gfp_mask)`
+        - Allocate a single page, zero it and return a virtual address
+    
+    - `unsigned long __get_free_page(unsigned int gfp_mask)`
+        - Allocate a single page and return a virtual address
+    
+    - `unsigned long __get_free_pages(unsigned int gfp_mask, unsigned int order)`
+        - Allocate 2<sup>*order*</sup> number of pages and return a virtual address
+
+- Fazer lógica para alocar a memória
+
+- Fazer lógica para desalocar a memória
+
+- [É isso]
