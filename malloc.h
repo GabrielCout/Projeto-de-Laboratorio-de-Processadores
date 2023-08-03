@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stddef.h>
 
 /*
  * Macros úteis
@@ -26,5 +27,5 @@ typedef struct free_area_struct {
     unsigned long    *map;
 } free_area_t;
 
-void *malloc(int size);
+void *malloc(size_t size);
 

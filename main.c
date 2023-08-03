@@ -2,9 +2,10 @@
 #include "malloc.h"
 
 int main(void) {
-   uint32_t p;
+   uint32_t pages;
+   void *p;
    
-   malloc(p);
+   p = (void *)malloc(pages);
 }
 
 

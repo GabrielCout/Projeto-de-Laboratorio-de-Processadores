@@ -1,0 +1,119 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00000000                        . = 0x0
+
+.reset          0x00000000       0xa0
+ *(.reset)
+ .reset         0x00000000       0xa0 boot.o
+                0x00008000                        . = 0x8000
+
+.text           0x00008000      0x18c
+ *(.text)
+ .text          0x00008000        0x0 boot.o
+ .text          0x00008000      0x15c malloc.o
+                0x00008000                initialize
+                0x00008130                malloc
+ .text          0x0000815c       0x30 main.o
+                0x0000815c                main
+
+.glue_7         0x0000818c        0x0
+ .glue_7        0x0000818c        0x0 linker stubs
+
+.glue_7t        0x0000818c        0x0
+ .glue_7t       0x0000818c        0x0 linker stubs
+
+.vfp11_veneer   0x0000818c        0x0
+ .vfp11_veneer  0x0000818c        0x0 linker stubs
+
+.v4_bx          0x0000818c        0x0
+ .v4_bx         0x0000818c        0x0 linker stubs
+
+.iplt           0x0000818c        0x0
+ .iplt          0x0000818c        0x0 boot.o
+
+.rel.dyn        0x0000818c        0x0
+ .rel.iplt      0x0000818c        0x0 boot.o
+
+.data           0x0000818c        0x4
+ *(.data)
+ .data          0x0000818c        0x0 boot.o
+ .data          0x0000818c        0x4 malloc.o
+                0x0000818c                MAX_BLOCK_SIZE
+ .data          0x00008190        0x0 main.o
+                0x00008190                        start_bss = .
+
+.igot.plt       0x00008190        0x0
+ .igot.plt      0x00008190        0x0 boot.o
+
+.bss            0x00008190       0xa0
+ *(.bss)
+ .bss           0x00008190        0x0 boot.o
+ .bss           0x00008190       0xa0 malloc.o
+                0x00008190                free_area
+ .bss           0x00008230        0x0 main.o
+                0x0000a230                        . = (. + 0x2000)
+                0x0000a230                        . = ALIGN (0x4)
+                0x0000a230                        end_bss = .
+                0x0000a230                        start_heap = .
+                0x0020a230                        . = (. + 0x200000)
+                0x0020a230                        . = ALIGN (0x8)
+                0x0020a230                        stack_svr = .
+LOAD boot.o
+LOAD malloc.o
+LOAD main.o
+OUTPUT(kernel.elf elf32-littlearm)
+LOAD linker stubs
+
+.ARM.attributes
+                0x00000000       0x2b
+ .ARM.attributes
+                0x00000000       0x14 boot.o
+ .ARM.attributes
+                0x00000014       0x2a malloc.o
+ .ARM.attributes
+                0x0000003e       0x2a main.o
+
+.comment        0x00000000       0x55
+ .comment       0x00000000       0x55 malloc.o
+                                 0x56 (size before relaxing)
+ .comment       0x00000055       0x56 main.o
+
+.debug_line     0x00000000      0x435
+ .debug_line    0x00000000       0x5f boot.o
+ .debug_line    0x0000005f      0x229 malloc.o
+ .debug_line    0x00000288      0x1ad main.o
+
+.debug_info     0x00000000      0x300
+ .debug_info    0x00000000       0x26 boot.o
+ .debug_info    0x00000026      0x1f7 malloc.o
+ .debug_info    0x0000021d       0xe3 main.o
+
+.debug_abbrev   0x00000000      0x1c0
+ .debug_abbrev  0x00000000       0x14 boot.o
+ .debug_abbrev  0x00000014      0x111 malloc.o
+ .debug_abbrev  0x00000125       0x9b main.o
+
+.debug_aranges  0x00000000       0x60
+ .debug_aranges
+                0x00000000       0x20 boot.o
+ .debug_aranges
+                0x00000020       0x20 malloc.o
+ .debug_aranges
+                0x00000040       0x20 main.o
+
+.debug_str      0x00000000      0x1cd
+ .debug_str     0x00000000       0x4c boot.o
+ .debug_str     0x0000004c      0x16f malloc.o
+                                0x1f0 (size before relaxing)
+ .debug_str     0x000001bb       0x12 main.o
+                                0x14a (size before relaxing)
+
+.debug_frame    0x00000000       0x84
+ .debug_frame   0x00000000       0x50 malloc.o
+ .debug_frame   0x00000050       0x34 main.o
