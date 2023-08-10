@@ -2,14 +2,22 @@
 .org 0
 
 // vettor de interrupções (deve estar em 0x000000000)
-b _reset
-b _undefined
-b _swi
-b _abort1
-b _reset
+ldr pc, reset_addr
+ldr pc, undefined_addr
+ldr pc, swi_addr
+ldr pc, abort1_addr
+ldr pc, abort2_addr
 nop
-b _irq
-b _fiq
+ldr pc, irq_addr
+ldr pc, fiq_addr
+
+reset_addr: .word _reset
+undefined_addr: .word _undefined
+swi_addr:   .word _swi
+abort1_addr:   .word _abort1
+abort2_addr:   .word _abort2
+irq_addr:   .word _irq
+fiq_addr:   .word _fiq
 
 .text
 _reset:

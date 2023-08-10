@@ -8,7 +8,7 @@ SECTIONS {                  /* arquivo kernel.ld para placa Evaluator7T */
    /*
     * Segmentos text e data
     */
-   . = 0x8000; 
+   . = 0x40000000; 
   .text : { *(.text) }
   .data : { *(.data) }
 
@@ -25,7 +25,7 @@ SECTIONS {                  /* arquivo kernel.ld para placa Evaluator7T */
    * Reserva espaÃ§o para a pilha
    */
   start_heap = .;
-  . = 0x40000000;
+  . = . + 0x200000;
   . = ALIGN(8);
   end_heap = .;
   . = . + 0x200000; 
