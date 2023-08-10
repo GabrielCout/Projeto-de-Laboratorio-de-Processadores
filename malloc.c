@@ -2,18 +2,18 @@
 
 free_area_t free_area[MAX_ORDER];
 
-void initialize(uint32_t heap_init, uint32_t stack_init) {
-    uint32_t size_in_bytes = stack_init - heap_init;
+void initialize(uint32_t heap_init, uint32_t end_heap) {
+    uint32_t size_in_bytes = end_heap - heap_init;
     uint32_t i = 0;
     struct list_addr *current;
     struct list_addr *previous;
-    uint8_t j = 0;
+    uint8_t order = 0;
 
-    for (j = 0; j < MAX_ORDER; j++) {
-        free_area[j].map = NULL;
+    for (order = 0; order < MAX_ORDER; order++) {
+        free_area[order].map = NULL; // Alterar, tem q alocar o tamanho certo para cada um
     }
 
-    for (i = 0, current = &free_area[MAX_ORDER].free_list; i < size_in_bytes; i += MAX_BLOCK_SIZE, current += 2*sizeof(struct list_addr *) + sizeof(uint32_t)) {
+    for (i = 0, current = &free_area[MAX_ORDER-1].free_list; i < size_in_bytes; i += MAX_BLOCK_SIZE, current += 2*sizeof(struct list_addr *) + sizeof(uint32_t)) { // filling only the max order array (max block size)
         if (i == 0) {
             current->prev = NULL;
         }

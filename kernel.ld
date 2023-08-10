@@ -25,7 +25,9 @@ SECTIONS {                  /* arquivo kernel.ld para placa Evaluator7T */
    * Reserva espaÃ§o para a pilha
    */
   start_heap = .;
-  . = . + 0x200000;
+  . = 0x40000000;
   . = ALIGN(8);
+  end_heap = .;
+  . = . + 0x200000; 
   stack_svr = .;
 }

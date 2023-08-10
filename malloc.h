@@ -29,5 +29,7 @@ typedef struct free_area_struct {
     unsigned long    *map;
 } free_area_t;
 
+void initialize(uint32_t heap_init, uint32_t end_heap);
+
 void *malloc(size_t size);
 

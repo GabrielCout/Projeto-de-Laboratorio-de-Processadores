@@ -6,11 +6,12 @@ b _reset
 b _undefined
 b _swi
 b _abort1
-b _abort2
+b _reset
 nop
 b _irq
 b _fiq
 
+.text
 _reset:
    // Configura sp do modo SVR:
    mov r0, #0b10011
@@ -60,6 +61,6 @@ _fiq:
 
 start:
     ldr r0, =start_heap
-    ldr r1, =stack_svr
+    ldr r1, =end_heap
     bl initialize
 
