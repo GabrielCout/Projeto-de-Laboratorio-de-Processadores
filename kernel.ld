@@ -17,7 +17,7 @@ SECTIONS {                  /* arquivo kernel.ld para placa Evaluator7T */
    */
   start_bss = .;
   .bss : { *(.bss) }
-  . = . + 0x2000;
+  . = . + 0x20000;
   . = ALIGN(4); 
   end_bss = .;
 
@@ -25,7 +25,7 @@ SECTIONS {                  /* arquivo kernel.ld para placa Evaluator7T */
    * Reserva espaÃ§o para a pilha
    */
   start_heap = .;
-  . = . + 0x200000;
+  . = . + 0x4000000;
   . = ALIGN(8);
   end_heap = .;
   . = . + 0x200000; 

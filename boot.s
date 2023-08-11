@@ -71,4 +71,5 @@ start:
     ldr r0, =start_heap
     ldr r1, =end_heap
     bl initialize
+    bl main
 
