@@ -1,5 +1,7 @@
 #include "malloc.h"
 
+// #define MARK_USED(index, order, area)  __change_bit((index) >> (1+(order)), (area)->map)
+
 free_area_t free_area[MAX_ORDER]; // 0 to MAX_ORDER
 unsigned long bitmaps[(MAX_PAGES-MAX_PAGES/(1 << (MAX_ORDER)))/(8*sizeof(unsigned long)) + 1]; // All bitmaps together so it can be statically defined, as well as its size
 
@@ -35,7 +37,8 @@ void initialize(uint32_t heap_init, uint32_t end_heap) {
 
         if (i == size_in_bytes/MAX_BLOCK_SIZE-1) {
             current = current->next;
-            current->prev = (struct list_addr *) heap_init + (i-2);
+            current->prev = (struct list_addr *) (heap_init + (i-1) * MAX_BLOCK_SIZE);
+            current->next = current; // End of list, points to itself
         }
     }
 }
