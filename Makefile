@@ -12,9 +12,15 @@ OBJ = $(FONTES:.s=.o)
 OBJETOS = $(OBJ:.c=.o)
 OPTS = -g
 
+#
+# Opções do linker
+#
+LDOPTS = -L/mingw64/lib/gcc/arm-none-eabi/12.2.0/ -L/mingw64/arm-none-eabi/lib
+LDOPTS += -lg -lgcc
+
 # Alvo: gerar executável
 ${EXEC}: ${OBJETOS}
-	${LD} -T ${LDSCRIPT} -M=${MAP} -o $@ ${OBJETOS}
+	${LD} -T ${LDSCRIPT} -M=${MAP} -o $@ ${OBJETOS} ${LDOPTS}
 
 # Alvo: montar arquivos em assembler
 .s.o:
