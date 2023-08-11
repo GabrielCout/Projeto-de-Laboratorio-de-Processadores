@@ -1,3 +1,5 @@
+HEAP_SIZE = 0x4000000;
+
 SECTIONS {                  /* arquivo kernel.ld para placa Evaluator7T */
    /*
     * Vetor de reset
@@ -25,7 +27,7 @@ SECTIONS {                  /* arquivo kernel.ld para placa Evaluator7T */
    * Reserva espaÃ§o para a pilha
    */
   start_heap = .;
-  . = . + 0x4000000;
+  . = . + HEAP_SIZE;
   . = ALIGN(8);
   end_heap = .;
   . = . + 0x200000; 
