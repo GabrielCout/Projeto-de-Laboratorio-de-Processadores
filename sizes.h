@@ -25,4 +25,5 @@
 #define MAX_ORDER 10
 #endif
 
-#define MAX_BLOCK_SIZE (PAGE_SIZE * (1 << (MAX_ORDER-1)))
+#define BLOCK_SIZE(order) (PAGE_SIZE * (1UL << order))
+#define MAX_BLOCK_SIZE BLOCK_SIZE(MAX_ORDER-1)

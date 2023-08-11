@@ -70,6 +70,7 @@ _fiq:
 start:
     ldr r0, =start_heap
     ldr r1, =end_heap
+    mov r2, #0
     bl initialize
     bl main
 
