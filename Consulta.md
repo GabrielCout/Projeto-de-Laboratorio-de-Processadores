@@ -86,6 +86,7 @@ typedef struct free_area_struct {
 
 - The API for the freeing of pages is a lot simpler and exists to help remember the order of the block to free
     - This because one disadvantage of a buddy allocator is that the caller has to remember the size of the original allocation
+    - Save it on a header in the block
 - API
     - `void __free_pages(struct page *page, unsigned int order)` - Free an order number of pages from the given page
     - `void __free_page(struct page *page)` - Free a single page

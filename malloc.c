@@ -117,7 +117,7 @@ unsigned long allocate_pages(size_t order){
             if (current_order != order) { // Not in the wanted order
                 block_addr = get_block_from_order(order, current_order, block_addr); // divide it until the wanted order
             }
-            MARK_USED((block_addr-heap_start)/PAGE_SIZE, order, &free_area[order]);
+            MARK_USED((block_addr-heap_start)/PAGE_SIZE, order, &free_area[order]); // Invert bit for the actual allocation
             return block_addr;
         }
     }
@@ -152,8 +152,10 @@ void *malloc(size_t size) {
     void *p = 0;
     size_t order;
     size_t block_size;
+    struct block_order *block_header;
 
     if (size <= PAGE_SIZE) {
+        order = 0;
         p = (void *) get_free_page();
     }
     else if (size > MAX_BLOCK_SIZE) { // can`t give one block
@@ -171,6 +173,60 @@ void *malloc(size_t size) {
         p = (void *) get_free_pages(order);
     }
 
-    return p;
+    block_header = p;
+    block_header->order = order;
+    return p + sizeof(struct block_order) + (sizeof(struct block_order) % 4);
+}
+
+unsigned long merge(unsigned long block_addr, size_t order) {
+    unsigned long buddy_addr;
+
+    buddy_addr = block_addr ^ (1 << order);
+    pop_first_element(buddy_addr);
+
+    return buddy_addr < block_addr ? buddy_addr : block_addr;
+}
+
+void free_pages_ok(void *block_addr, size_t order) {
+    size_t current_order;
+    unsigned long addr = block_addr;
+
+    for (current_order = order;;current_order++) {
+        MARK_USED((addr-heap_start)/PAGE_SIZE, current_order, &free_area[current_order]);
+        if (BUDDY_IS_FREE((addr-heap_start)/PAGE_SIZE, current_order, &free_area[current_order])) {
+            addr = merge(addr, current_order);
+        }
+        else {
+            put_element(&free_area[current_order].free_list, (struct list_addr *)addr);
+            break;
+        }
+    }
+}
+
+void free_page(void *block_addr) {
+    free_pages_ok(block_addr, 0);
+}
+
+void free_pages(void *block_addr, size_t order) {
+    free_pages_ok(block_addr, order);
+}
+
+void free(void *addr) {
+    void *block_addr;
+    size_t order;
+    
+    if (addr == 0) {
+        return;
+    }
+
+    block_addr = addr - sizeof(struct block_order) - (sizeof(struct block_order) % 4);
+    order = ((struct block_order *)block_addr)->order;
+
+    if (order == 0) {
+        free_page(block_addr);
+    }
+    else if (order < MAX_ORDER) {
+        free_pages(block_addr, order);
+    }
 }
 
