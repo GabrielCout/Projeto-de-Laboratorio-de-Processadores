@@ -95,6 +95,9 @@ unsigned long get_block_from_order(size_t wanted_order, size_t found_block_order
 
     for (i = 0; i < found_block_order-wanted_order; i++) {
         return_addr = block_addr + BLOCK_SIZE(found_block_order-i)/2;
+        if (found_block_order-i != MAX_ORDER-1) { // invert the bit when my block is divided
+            MARK_USED((block_addr-heap_start)/PAGE_SIZE, found_block_order-i, &free_area[found_block_order-i]);
+        }
         put_element(&free_area[found_block_order-i-1].free_list, (struct list_addr *)block_addr);
         block_addr = return_addr;
     }
@@ -113,9 +116,9 @@ unsigned long allocate_pages(size_t order){
             block_addr = (unsigned long) pop_first_element(current_list); // found a block
             if (current_order != order) { // Not in the wanted order
                 block_addr = get_block_from_order(order, current_order, block_addr); // divide it until the wanted order
-                MARK_USED((block_addr-heap_start)/PAGE_SIZE, order, &free_area[order]);
-                return block_addr;
             }
+            MARK_USED((block_addr-heap_start)/PAGE_SIZE, order, &free_area[order]);
+            return block_addr;
         }
     }
 

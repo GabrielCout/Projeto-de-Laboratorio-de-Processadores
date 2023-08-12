@@ -80,6 +80,7 @@ typedef struct free_area_struct {
     - The function [**rmqueue()**](https://github.com/torvalds/linux/blob/master/mm/page_alloc.c#L2807) is called to allocate the block of pages or split higher level blocks if one of the appropriate size is not available
 
 - Commadn to debug free_area struct: x/30x &free_area
+- Invert the bit for the block that is being subdivided AND for the block truly/entirely allocated.
 
 # 6.3 - Free Pages
 
@@ -112,4 +113,5 @@ typedef struct free_area_struct {
         	imask = -mask = 1 + ~mask
        		```
 - Once the buddy is merged, it is removed for the free list and the newly coalesced pair moves to the next higher order to see if it may also be merged
+- When merging buddies, invert the bit for the new merged block, independent of the option chosen in the allocation
 
