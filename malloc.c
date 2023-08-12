@@ -192,8 +192,10 @@ void free_pages_ok(void *block_addr, size_t order) {
     unsigned long addr = block_addr;
 
     for (current_order = order;;current_order++) {
-        MARK_USED((addr-heap_start)/PAGE_SIZE, current_order, &free_area[current_order]);
-        if (BUDDY_IS_FREE((addr-heap_start)/PAGE_SIZE, current_order, &free_area[current_order])) {
+        if (current_order < MAX_ORDER - 1) {
+            MARK_USED((addr-heap_start)/PAGE_SIZE, current_order, &free_area[current_order]);
+        }
+        if (BUDDY_IS_FREE((addr-heap_start)/PAGE_SIZE, current_order, &free_area[current_order]) && current_order < MAX_ORDER - 1) { // for the MAX_ORDER-1, it is always marked as free
             addr = merge(addr, current_order);
         }
         else {
