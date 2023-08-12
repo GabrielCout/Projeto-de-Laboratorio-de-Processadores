@@ -61,17 +61,32 @@ uint8_t empty_list(struct list_addr *list) {
 struct list_addr *pop_first_element(struct list_addr *list) {
     struct list_addr *return_addr;
 
+    if (empty_list(list)) {
+        return (struct list_addr *)0UL;
+    }
+
     return_addr = list->next;
-    list->next = return_addr->next;
+    if (return_addr->next == return_addr) { // last of the list, will be empty when removed
+        list->next = list;
+    }
+    else {
+        list->next = return_addr->next;
+    }
     return_addr->next->prev = return_addr->prev;
     return return_addr;
 }
 
 void put_element(struct list_addr *list, struct list_addr *element) {
-    element->next = list->next;
-    element->prev = list;
+    if (empty_list(list)) {
+        element->next = element;
+        element->prev = list;
+    }
+    else {
+        element->next = list->next;
+        element->prev = list;
+        element->next->prev = element;
+    }
     list->next = element;
-    element->next->prev = element;
 }
 
 unsigned long get_block_from_order(size_t wanted_order, size_t found_block_order,unsigned long block_addr) {
@@ -93,11 +108,12 @@ unsigned long allocate_pages(size_t order){
     unsigned long block_addr;
 
     for (current_order = order; current_order < MAX_ORDER; current_order++) {
-        current_list = &free_area[order].free_list;
+        current_list = &free_area[current_order].free_list;
         if (!empty_list(current_list)) {
             block_addr = (unsigned long) pop_first_element(current_list); // found a block
             if (current_order != order) { // Not in the wanted order
-                block_addr = get_block_from_order(order, current_order, block_addr);
+                block_addr = get_block_from_order(order, current_order, block_addr); // divide it until the wanted order
+                MARK_USED((block_addr-heap_start)/PAGE_SIZE, order, &free_area[order]);
                 return block_addr;
             }
         }
@@ -138,7 +154,7 @@ void *malloc(size_t size) {
         p = (void *) get_free_page();
     }
     else if (size > MAX_BLOCK_SIZE) { // can`t give one block
-        return (void *)-1;
+        return (void *)0UL;
     }
     else {
         order = 1;

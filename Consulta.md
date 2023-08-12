@@ -79,6 +79,8 @@ typedef struct free_area_struct {
     ![Call Graph: **alloc_pages()**](https://www.kernel.org/doc/gorman/html/understand/understand-html031.png)
     - The function [**rmqueue()**](https://github.com/torvalds/linux/blob/master/mm/page_alloc.c#L2807) is called to allocate the block of pages or split higher level blocks if one of the appropriate size is not available
 
+- Commadn to debug free_area struct: x/30x &free_area
+
 # 6.3 - Free Pages
 
 - The API for the freeing of pages is a lot simpler and exists to help remember the order of the block to free
