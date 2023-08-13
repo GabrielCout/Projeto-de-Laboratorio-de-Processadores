@@ -13,8 +13,12 @@
 #define HEAP_SIZE 67108864
 #endif // 64 MB
 
+#ifndef PAGE_SHIFT
+#define PAGE_SHIFT 12
+#endif
+
 #ifndef PAGE_SIZE
-#define PAGE_SIZE 4096
+#define PAGE_SIZE (1UL << PAGE_SHIFT)
 #endif
 
 #ifndef MAX_PAGES

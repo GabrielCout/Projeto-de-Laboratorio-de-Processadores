@@ -89,6 +89,20 @@ void put_element(struct list_addr *list, struct list_addr *element) {
     list->next = element;
 }
 
+void remove_from_list(struct list_addr *list, struct list_addr *element) {
+    struct list_addr *current_element;
+    
+    if (empty_list(list)) {
+        return;
+    }
+
+    for (current_element = list; !empty_list(current_element); current_element = current_element->next) {
+        if(current_element->next == element) {
+            pop_first_element(current_element);
+        }
+    }
+}
+
 unsigned long get_block_from_order(size_t wanted_order, size_t found_block_order,unsigned long block_addr) {
     unsigned long return_addr;
     uint32_t i;
@@ -181,15 +195,15 @@ void *malloc(size_t size) {
 unsigned long merge(unsigned long block_addr, size_t order) {
     unsigned long buddy_addr;
 
-    buddy_addr = block_addr ^ (1 << order);
-    pop_first_element(buddy_addr);
+    buddy_addr = ((block_addr-heap_start) ^ (1 << (order+PAGE_SHIFT))) + heap_start;
+    remove_from_list(&free_area[order].free_list, (struct list_addr *)buddy_addr);
 
     return buddy_addr < block_addr ? buddy_addr : block_addr;
 }
 
 void free_pages_ok(void *block_addr, size_t order) {
     size_t current_order;
-    unsigned long addr = block_addr;
+    unsigned long addr = (unsigned long) block_addr;
 
     for (current_order = order;;current_order++) {
         if (current_order < MAX_ORDER - 1) {

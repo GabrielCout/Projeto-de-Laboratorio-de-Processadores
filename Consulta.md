@@ -99,7 +99,7 @@ typedef struct free_area_struct {
     - If the bit in the map is 0 after toggling (call **MARK_USED**), we know that the other buddy must also be free because if the bit is 0, it means both buddies are either both free or both allocated
     - If both are free, they may be merged
 - Calculating the address of the buddy
-    - As the allocations are always in blocks of size 2<sup>k</sup>, the address of the block, or at least its offset within **zone_mem_map** will also be a multiple of 2<sup>k</sup>
+    - As the allocations are always in blocks of size 2<sup>k</sup>, the address of the block, or at least its OFFSET within **zone_mem_map** will also be a multiple of 2<sup>k</sup>
     - The end result is that there will always be at least k number of zeros to the right of the address
     - To get the address of the buddy, the *kth* bit from the right is examined
     - The buddy will have this bit flipped
