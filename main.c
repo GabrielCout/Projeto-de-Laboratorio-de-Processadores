@@ -5,20 +5,20 @@ int main(void) {
    uint32_t pages = 3;
    void *p, *q, *r, *s, *t, *a, *b, *c;
    
-   a = (void *)malloc(2048*sizeof(int));
-   b = (void *)malloc(4096*sizeof(int));
-   c = (void *)malloc(4097*sizeof(int));
-   p = (void *)malloc(pages);
-   q = (void *)malloc(pages*sizeof(int));
+   a = malloc(2048*sizeof(int));
+   b = malloc(4096*sizeof(int));
+   c = malloc(4097*sizeof(int));
+   p = malloc(pages);
+   q = malloc(pages*sizeof(int));
    free(p);
-   r = (void *)malloc(pages*sizeof(int));
+   r = malloc(pages*sizeof(int));
    free(c);
-   s = (void *)malloc(1030*sizeof(int));
+   s = malloc(1030*sizeof(int));
    free(a);
    free(q);
    free(r);
    free(b);
-   t = (void *)malloc(1024*sizeof(int));
+   t = malloc(1024*sizeof(int));
    free(s);
    free(t);
 

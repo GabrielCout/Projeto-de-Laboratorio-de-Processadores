@@ -3,7 +3,7 @@
 #include "sizes.h"
 
 /*
- * Macros úteis
+ * Useful macros
  */
 #define bit_set(X, B) X |= (1UL << B)
 #define bit_clr(X, B) X &= ~(1UL << B)
