@@ -20,7 +20,8 @@ SECTIONS {                  /* arquivo kernel.ld para placa Evaluator7T */
   start_bss = .;
   .bss : { *(.bss) }
   . = . + 0x20000;
-  . = ALIGN(4); 
+  . = ALIGN(4);
+  /* . = ALIGN(4096); */
   end_bss = .;
 
   /*
