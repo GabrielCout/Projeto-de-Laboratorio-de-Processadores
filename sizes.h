@@ -3,7 +3,7 @@
 
 #ifndef WORD_SIZE
 #define WORD_SIZE (8*sizeof(unsigned long))
-#endif // 64 MB
+#endif // 32 B
 
 #ifndef BITS_PER_LONG
 #define BITS_PER_LONG WORD_SIZE
@@ -19,7 +19,7 @@
 
 #ifndef PAGE_SIZE
 #define PAGE_SIZE (1UL << PAGE_SHIFT)
-#endif
+#endif // 4096 B
 
 #ifndef MAX_PAGES
 #define MAX_PAGES (HEAP_SIZE/PAGE_SIZE)
