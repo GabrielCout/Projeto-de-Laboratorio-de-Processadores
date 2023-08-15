@@ -1,7 +1,7 @@
 .section .reset, "ax"
 .org 0
 
-// vettor de interrupções (deve estar em 0x000000000)
+// vetor de interrupções (deve estar em 0x000000000)
 ldr pc, reset_addr
 ldr pc, undefined_addr
 ldr pc, swi_addr

@@ -36,10 +36,17 @@ clean:
 
 # Alvo: iniciar qemu
 qemu: ${EXEC}
+ifeq ($(OS),Windows_NT)
 	@if netstat -na | grep ":1234" > /dev/null ; then\
 		echo "qemu já está executando"; \
 	else qemu-system-arm -s -M virt & \
 	fi
+else
+	@if lsof -Pi :1234 >/dev/null ; then\
+		echo "qemu jÃ¡ estÃ¡ executando"; \
+	else qemu-system-arm -s -M virt & \
+	fi
+endif
 
 # Alvo: iniciar gdb
 gdb: ${EXEC}
