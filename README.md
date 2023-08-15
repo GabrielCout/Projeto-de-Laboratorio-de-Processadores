@@ -61,9 +61,10 @@ sudo apt install gdb-multiarch qemu-system-arm make
 ### Instalação no Windows
 Para instalar as dependências no Windows 10, rode os seguintes comandos:
 
-Siga esse guia de instalação para o [Msys2](https://www.msys2.org/) ou instale outro ambiesnte semelhante
+Siga esse guia de instalação para o [Msys2](https://www.msys2.org/) ou instale outro ambientes semelhantes
 
-Em algum dos terminais baixados(mingw64, mingw32, msys), rode os seguintes comandos para instalação, se utilizar um processador Intel ou AMD:
+Para esse tutorial, o terminal Mingw64 baixado junto da ferramenta msys2 será utilizado.
+No ambiente Mingw64, utilize os seguintes comandos:
 
 ~~~bash
 pacman -Suy
@@ -71,8 +72,8 @@ pacman -S mingw-w64-x86_64-arm-none-eabi-toolchain
 pacman -S mingw-w64-x86_64-gdb-multiarch
 pacman -S mingw-w64-x86_64-qemu
 pacman -S make
+export PATH=$PATH:/mingw64/bin/
 ~~~
-
 
 ## 🚨 Observações
 
