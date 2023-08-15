@@ -348,7 +348,7 @@ void free(void *addr) {
     void *block_addr;
     size_t order;
     
-    if (addr == 0) {
+    if ((unsigned long) addr < heap_start) {
         return;
     }
 
